@@ -123,3 +123,27 @@ def solution(L, x, l, u):
     else:
         return solution(L, x, mid+1, u)
 ```
+
+## 알고리즘의 복잡도 (Complexity of Algorithm)
+
+#### 시간 복잡도 (Time Complexity)
+문제의 크기와 이를 해결하는 데 걸리는 시간 사이의 관계
+#### 공간 복잡도 (Space Complexity)
+문제의 크기광 이를 해결하는 데 필요한 메모리 공간 사이의 관계
+#### 평균 시간 복잡도 (Average Time Complexity)
+임의의 입력 패턴을 가정했을 때 소요되는 시간의 평균
+#### 최악 시간 복잡도 (Worst-case Time Complexity)
+가장 긴 시간을 소요하게 만드는 입력에 따라 소요되는 시간
+
+#### Big-O 표기법(Notation)
+점근 표기법(asymptotic notation)의 하나로 어떤 함수의 증가 양상을 다른 함수와의 비교로 표현하며 알고리즘의 복잡도를 표현할 때 흔히 쓰인다.
+> `O(1)`, `O(logn)`, `O(nlogn)`, `O(n)`, `O(n^2)`
+
+##### 삽입정렬(insertion sort)
+Best case: `O(n)`
+Worst case: `O(n^2)`
+##### 병합정렬(merge sort)
+Average case: `O(nlogn)`
+##### 배낭문제(Knapsack Problem)
+풀이 방법에 따라 `O(2^n)` 혹은 `O(n)`
+
