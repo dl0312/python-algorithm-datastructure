@@ -1,4 +1,4 @@
-## Linear Arrays
+## 선형 배열(Linear Arrays)
 선형 배열은 데이터들이 선(line)처럼 일렬로 늘어선 형태를 말한다. 보통 프로그래밍에서 배열(array)라 하면 같은 타입의 데이터가 줄지어 늘어서 있는 것을 뜻합니다. 그러나 python에서는 서로 다른 종류의 데이터 또한 줄세울 수 있는 리스트(list)라는 데이터형이 있습니다.
 ```python
 L = ['Bob', 'Cat', 'Spam', 'Superman']
@@ -71,4 +71,55 @@ def binary_search(L, x):
         else:
             end = mid -1
     return -1
+```
+
+### 재귀 알고리즘(recursive algorithms)
+주어진 문제가 있을 때, 이것을 같은 종류의 보다 쉬운 문제의 답을 이용해서 풀 수 있는 성질을 이용해서, 같은 알고리즘을 반복적으로 적용함으로써 풀어내는 방법.
+
+#### 재귀 알고리즘의 예시
+* 피보나치 순열
+```python
+# 반복적 방법(iterative)
+def solution(x):
+    a = 0
+    b = 1
+    if x == 0:
+        return a
+    elif x == 1:
+        return b
+    else:
+        for i in range(1,x):
+            c = a + b
+            a = b
+            b = c
+    return c
+```
+```python
+# 재귀적 방법(recursive)
+def solution(x):
+    a = 0
+    b = 1
+    if x == 0:
+        return a
+    elif x == 1:
+        return b
+    return solution(x-1) + solution(x-2)
+```
+* 조합의 수 (n개의 서로 다른 원소에서 m개를 택하는 경우의 수) 구하기
+* 하노이의 탑 (크기 순서로 쌓여 있는 원반을 한 막대에서 다른 막대로 옮기기)
+
+재귀 알고리즘을 적용하면 사람이 생각하는 것과 동일한 방식으로 풀어 알고리즘을 간단하고 이해하기 쉽게 서술할 수 있다는 장점이 있지만, 대부분의 경우 재귀 알고리즘이 주어질 때 이것을 재귀적이지 않은 방법으로 동일하게 풀어내는 알고리즘이 존재하고, 보통은 순환문(loop)을 이용해서 정해진 연산을 반복해서 문제의 답을 구해서 이를 반복적(iterative) 알고리즘이라고 부르기도 한다. 그리고 반복적인 알고리즘이 재귀적인 알고리즘보다 문제풀이의 시간적 효율이 높다.
+
+#### 재귀적 이진탐색
+```python
+def solution(L, x, l, u):
+    if l > u:
+        return -1
+    mid = (l + u) // 2
+    if x == L[mid]:
+        return mid
+    elif x < L[mid]:
+        return solution(L, x, l, mid-1)
+    else:
+        return solution(L, x, mid+1, u)
 ```
