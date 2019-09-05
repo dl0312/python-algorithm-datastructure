@@ -153,8 +153,11 @@ Average case: `O(nlogn)`
 연결 리스트에서는 원소들이 링크(link)라 부르는 고리로 연결되어 있으므로, 가운데에서 끊어서 하나를 삭제하거나, 다른 원소를 삽입하는 것이 선형 배열의 경우보다 빠르게 처리할 수 있다. 따라서 원소의 삽입/삭제가 빈번히 일어나는 응용에서는 연결리스트가 많이 사용된다. 컴퓨터 시스템을 구성하는 중요한 요소인 운영체제(OS)의 내부에서도 이러한 연결리스트가 여러 곳에서 이용되고 있다.
 
 물론 단점도 있다. 삽입과 삭제가 용이한 만큼 선형 배열에 비해서 데이터 구조 표현에 소요되는 저장 공간(메모리)가 크다. 링크도 메모리에 저장되어 있어야 하기 때문에, 연결 리스트를 표현하기 위해서는 동일한 데이터 원소들을 담기 위해 사용하는 메모리 요구량이 더 크다. 가장 큰 단점은 'k번째 원소'를 찾아가는 데에 선형 배열의 경우보다 시간이 오래 걸리다는 점이다. 선형 배열에서는 데이터 원소들이 번호가 붙여진 칸들에 들어 있으므로 그 번호를 이용하여 한 번에 특정 번째 원소를 찾아갈 수 있지만, 연결 리스트에서는 단지 원소들이 고리로 연결된 모습을 하고 있기 때문에 특정 번째 원소를 접근하기 위해서는 앞에서부터 하나씩 링크를 따라가면서 찾아가야한다.
-> [Linked List Traverse](./problems/linked_list_traverse.py)
+
+연결 리스트가 힘을 발휘하는 경우는 리스트를 따라서 하나 하나 원소들을 대상으로 어떤 작업을 하다가, 그 위치에 새로운 데이터 원소를 삽입하거나, 그 위치에 있는 데이터 원소를 삭제하는 경우이다.
 * 원소의 삽입 (insertion)
 * 원소의 삭제 (deletion)
-> [Linked List Node Deletion](./problems/linked_list_node_deletion.py)
 * 두 리스트 합치기 (concatenation)
+> [Linked List Traverse](./problems/linked_list_traverse.py)
+> [Linked List Node Deletion](./problems/linked_list_node_deletion.py)
+> [Linked List with dummy head](./problems/linked_list_with_dummy_head.py)
