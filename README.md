@@ -155,9 +155,123 @@ Average case: `O(nlogn)`
 물론 단점도 있다. 삽입과 삭제가 용이한 만큼 선형 배열에 비해서 데이터 구조 표현에 소요되는 저장 공간(메모리)가 크다. 링크도 메모리에 저장되어 있어야 하기 때문에, 연결 리스트를 표현하기 위해서는 동일한 데이터 원소들을 담기 위해 사용하는 메모리 요구량이 더 크다. 가장 큰 단점은 'k번째 원소'를 찾아가는 데에 선형 배열의 경우보다 시간이 오래 걸리다는 점이다. 선형 배열에서는 데이터 원소들이 번호가 붙여진 칸들에 들어 있으므로 그 번호를 이용하여 한 번에 특정 번째 원소를 찾아갈 수 있지만, 연결 리스트에서는 단지 원소들이 고리로 연결된 모습을 하고 있기 때문에 특정 번째 원소를 접근하기 위해서는 앞에서부터 하나씩 링크를 따라가면서 찾아가야한다.
 
 연결 리스트가 힘을 발휘하는 경우는 리스트를 따라서 하나 하나 원소들을 대상으로 어떤 작업을 하다가, 그 위치에 새로운 데이터 원소를 삽입하거나, 그 위치에 있는 데이터 원소를 삭제하는 경우이다.
+(ex. 스마트폰에서의 앱 전환 및 삭제)
 * 원소의 삽입 (insertion)
 * 원소의 삭제 (deletion)
 * 두 리스트 합치기 (concatenation)
 > [Linked List Traverse](./problems/linked_list_traverse.py)
 > [Linked List Node Deletion](./problems/linked_list_node_deletion.py)
 > [Linked List with dummy head](./problems/linked_list_with_dummy_head.py)
+
+## 양방향 연결 리스트(Doubly Linked Lists)
+기존의 연결 리스트를 한 쪽으로만 연결하지 않고 양쪽으로 연결하자, 앞으로도 (다음 Node) 뒤로도 (이전 Node) 진행이 가능하다.
+양방향 연결 리스트의 구현을 위해서는 `prev`를 추가하는, `Node` 구조의 확장이 필요하다. 이전에 `head`에 더미 노드를 두었던 것처럼 `tail`에도 더미 노드를 추가하여, 데이터를 담고 있는 `Node`들이 모두 같은 모양을 갖도록 한다.
+
+```python
+class Node:
+    def __init__(self, item):
+        self.data = item
+        self.prev = None
+        self.next = None
+        
+class DoublyLinkedList:
+    def __init__(self, item):
+        self.nodeCount = 0
+        self.head = Node(None)
+        self.tail = Node(None)
+        self.head.prev = None
+        self.head.next = self.tail
+        self.tail.prev = self.head
+        self.tail.next = None
+    # 연결리스트 이어 붙이기
+    def concat(self, L):
+        lastNode = self.tail.prev
+        firstNode = L.head.next
+        lastNode.next = firstNode
+        firstNode.prev = lastNode
+        self.tail = L.tail
+        self.nodeCount += L.nodeCount
+    # 정방향 순회
+    def traverse(self):
+        result = []
+        curr = self.head
+        while curr.next.next:
+            curr = curr.next
+            result.append(curr.data)
+        return result
+    # 역방향 순회
+    def reverse(self):
+        result = []
+        curr = self.tail
+        while curr.prev.prev:
+            curr = curr.prev
+            result.append(curr.data)
+        return result
+    # 특정 위치 뒤에 원소 삽입
+    def insertAfter(self, prev, newNode):
+        next = prev.next
+        newNode.prev = prev
+        newNode.next = next
+        prev.next = newNode
+        next.prev = newNode
+        self.nodeCount += 1
+        return True
+    # 특정 위치 앞에 원소 삽입
+    def insertBefore(self, next, newNode):
+        prev = next.prev
+        newNode.next = next
+        newNode.prev = prev
+        prev.next = newNode
+        next.prev = newNode
+        self.nodeCount += 1
+        return True
+    # 특정 위치에 원소 삽입
+    def insertAt(self, pos, newNode):
+        if pos < 1 or pos > self.nodeCount + 1:
+            return False
+        prev = self.getAt(pos - 1)
+        return self.insertAfter(prev, newNode)
+    # 특정 위치 뒤에 원소 삭제
+    def popAfter(self, prev):
+        delNode = prev.next
+        next = delNode.next
+        prev.next = next
+        next.prev = prev
+        self.nodeCount -= 1
+        return delNode.data
+
+    # 특정 위치 앞에 원소 삭제
+    def popBefore(self, next):
+        delNode = next.prev
+        prev = delNode.prev
+        next.prev = prev
+        prev.next = next
+        self.nodeCount -= 1
+        return delNode.data
+        
+    # 특정 위치 원소 삭제
+    def popAt(self, pos):
+        if pos < 1 or pos > self.nodeCount:
+            return IndexError
+        prev = self.getAt(pos - 1)
+        return self.popAfter(prev)
+        
+    # 특정 원소 얻어내기
+    def getAt(self, pos):
+        if pos < 0 or pos > self.nodeCount:
+            return None
+        if pos > self.nodeCount // 2:
+            i = 0
+            curr = self.tail
+            while i < self.nodeCount - pos + 1:
+                curr = curr.prev
+                i += 1
+            return curr
+        else:    
+            i = 0
+            curr = self.head
+            while i < pos:
+                curr = curr.next
+                i += 1
+            return curr
+``` 
