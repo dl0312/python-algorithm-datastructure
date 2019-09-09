@@ -275,3 +275,66 @@ class DoublyLinkedList:
                 i += 1
             return curr
 ``` 
+
+## 스택 (Stacks)
+
+자료를 보관할 수 있는 선형 구조로 넣을 때에는 한 쪽 끝에서 밀어 넣어야하고, 꺼낼 때에는 같은 쪽에서 꺼내야한다. 후입선출 (LIFO - Last-in First-Out)의 구조
+
+### 스택에서 발생하는 오류
+* 더이상 뺄 수 없는 스택에서 pop을 할 때 (stack underflow)
+* 더이상 채울 수 없는 스택에서 push를 할 때 (stack overflow)
+
+### 연산의 정의
+* `size()`: 현재 스택에 들어 있는 데이터 원소의 수를 구함
+* `isEmpty()`: 현재 스택이 비어 있는지를 판단 (`size() == 0?`)
+* `push(x)`: 데이터 원소 `x` 를 스택에 추가
+* `pop()`: 스택에 가장 나중에 저장된 데이터 원소를 제거 (또한, 반환)
+* `peek()`: 스택에 가장 나중에 저장된 데이터 원소를 참조 (반환), 그러나 제거하지는 않음
+
+```python
+from doublylinkedlist import Node
+from doublylinkedlist import DoublyLinkedList
+
+
+class ArrayStack:
+
+	def __init__(self):
+		self.data = []
+
+	def size(self):
+		return len(self.data)
+
+	def isEmpty(self):
+		return self.size() == 0
+
+	def push(self, item):
+		self.data.append(item)
+
+	def pop(self):
+		return self.data.pop()
+
+	def peek(self):
+		return self.data[-1]
+
+
+class LinkedListStack:
+
+	def __init__(self):
+		self.data = DoublyLinkedList()
+
+	def size(self):
+		return self.data.getLength()
+
+	def isEmpty(self):
+		return self.size() == 0
+
+	def push(self, item):
+		node = Node(item)
+		self.data.insertAt(self.size() + 1, node)
+
+	def pop(self):
+		return self.data.popAt(self.size())
+
+	def peek(self):
+		return self.data.getAt(self.size()).data
+```
